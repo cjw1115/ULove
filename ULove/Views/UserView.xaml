@@ -1,0 +1,129 @@
+﻿<Page
+    x:Class="ULove.Views.UserView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:ULove.Views"
+    xmlns:converter="using:ULove.Converter"
+    xmlns:control="using:ULove.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    local:UserView.NavigateToCommand="{Binding NavigateToCommand}">
+    <Page.DataContext>
+        <Binding Path="User" Source="{StaticResource Locator}"></Binding>
+    </Page.DataContext>
+
+    <Page.Resources>
+        <converter:ShareMessageConverter x:Key="shareMessageConverter"></converter:ShareMessageConverter>
+    </Page.Resources>
+    <Grid Background="WhiteSmoke">
+
+        <ScrollViewer VerticalScrollBarVisibility="Hidden">
+            <ScrollViewer.Resources>
+                <Storyboard x:Name="itemStoryboard">
+                    <DoubleAnimation Storyboard.TargetName="grid_me_compositeTransform" Storyboard.TargetProperty="TranslateY" From="160" To="0" Duration="0:0:0.1" >
+                        <DoubleAnimation.EasingFunction>
+                            <SineEase EasingMode="EaseIn"></SineEase>
+                        </DoubleAnimation.EasingFunction>
+                    </DoubleAnimation>
+                    <DoubleAnimation Storyboard.TargetName="grid_bind_compositeTransform" Storyboard.TargetProperty="TranslateY" From="160" To="0" Duration="0:0:0.2">
+                        <DoubleAnimation.EasingFunction>
+                            <SineEase EasingMode="EaseIn"></SineEase>
+                        </DoubleAnimation.EasingFunction>
+                    </DoubleAnimation>
+                    <DoubleAnimation Storyboard.TargetName="grid_you_compositeTransform" Storyboard.TargetProperty="TranslateY" From="160" To="0" Duration="0:0:0.3">
+                        <DoubleAnimation.EasingFunction>
+                            <SineEase EasingMode="EaseIn"></SineEase>
+                        </DoubleAnimation.EasingFunction>
+                    </DoubleAnimation>
+                    <DoubleAnimation Storyboard.TargetName="grid_bindrequest_compositeTransform" Storyboard.TargetProperty="TranslateY" From="160" To="0" Duration="0:0:0.4">
+                        <DoubleAnimation.EasingFunction>
+                            <SineEase EasingMode="EaseIn"></SineEase>
+                        </DoubleAnimation.EasingFunction>
+                    </DoubleAnimation>
+                    <DoubleAnimation Storyboard.TargetName="grid_currentbg_compositeTransform" Storyboard.TargetProperty="TranslateY" From="160" To="0" Duration="0:0:0.5">
+                        <DoubleAnimation.EasingFunction>
+                            <SineEase EasingMode="EaseIn"></SineEase>
+                        </DoubleAnimation.EasingFunction>
+                    </DoubleAnimation>
+                </Storyboard>
+            </ScrollViewer.Resources>
+            <RelativePanel x:Name="mainPanel" Margin="4">
+                <Grid  x:Name="grid_me" RelativePanel.AlignLeftWithPanel="True" 
+                  RelativePanel.AlignRightWithPanel="True"
+                  Margin="0,8,0,4"
+                       Background="White">
+                    <Grid.RenderTransform  >
+                        <CompositeTransform   x:Name="grid_me_compositeTransform"></CompositeTransform>
+                    </Grid.RenderTransform>
+                        <control:PersonalInfoBar  x:Name="info_me" User="{Binding User,Mode=OneWay}"></control:PersonalInfoBar>
+                </Grid>
+                <Grid x:Name="grid_bind" RelativePanel.Below="grid_me" 
+                  RelativePanel.AlignLeftWithPanel="True"
+                  RelativePanel.AlignRightWithPanel="True"
+                  Margin="0,4,0,4"
+                      Background="White">
+                    <Grid.RenderTransform  >
+                        <CompositeTransform  x:Name="grid_bind_compositeTransform"></CompositeTransform>
+                    </Grid.RenderTransform>
+                    <control:BindBar  Bind="{Binding Bind,Mode=TwoWay}"></control:BindBar>
+                </Grid>
+
+                <Grid x:Name="grid_you" RelativePanel.Below="grid_bind" 
+                  RelativePanel.AlignLeftWithPanel="True"
+                  RelativePanel.AlignRightWithPanel="True"
+                  Margin="0,8,0,8"
+                      Background="White">
+                    <Grid.RenderTransform  >
+                        <CompositeTransform  x:Name="grid_you_compositeTransform"></CompositeTransform>
+                    </Grid.RenderTransform>
+                    <control:PersonalInfoBar x:Name="info_u" User="{Binding Lover,Mode=OneWay}"></control:PersonalInfoBar>
+                </Grid>
+                <Grid x:Name="grid_bindrequest" RelativePanel.Below="grid_you" 
+                  RelativePanel.AlignLeftWithPanel="True"
+                  RelativePanel.AlignRightWithPanel="True"
+                  Margin="0,4,0,4"
+                      Background="White">
+                    <Grid.RenderTransform  >
+                        <CompositeTransform  x:Name="grid_bindrequest_compositeTransform"></CompositeTransform>
+                    </Grid.RenderTransform>
+                    <control:BindRequestBar  
+                        BindRequestID="{Binding BindRequestID,Mode=TwoWay}"
+                        AcceptCommand="{Binding AcceptCommand}"
+                        RefuseCommand="{Binding RefuseCommand}"></control:BindRequestBar>
+                </Grid>
+                <Grid x:Name="grid_currentbg" RelativePanel.Below="grid_bindrequest" 
+                  RelativePanel.AlignLeftWithPanel="True"
+                  RelativePanel.AlignRightWithPanel="True"
+                  Margin="0,4,0,4"
+                      Background="White">
+                    <Grid.RenderTransform  >
+                        <CompositeTransform  x:Name="grid_currentbg_compositeTransform"></CompositeTransform>
+                    </Grid.RenderTransform>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="最近分享" Margin="4"></TextBlock>
+                    <Grid Grid.Row="1">
+                        <control:ShareBar ULoveSharedInfo="{Binding MyULoveSharedInfo,Mode=OneWay}"
+                                          ULoveImage="{Binding MyULoveImage,Mode=OneWay}"
+                                          Click="{Binding MyClickCommand}"></control:ShareBar>
+                    </Grid>
+                    <Grid Grid.Row="2">
+                        <control:ShareBar ULoveSharedInfo="{Binding LoverULoveSharedInfo,Mode=OneWay}"
+                                          ULoveImage="{Binding LoverULoveImage,Mode=OneWay}"
+                                          Click="{Binding LoverClickCommand}"></control:ShareBar>
+                    </Grid>
+                    
+                    
+                </Grid>
+            </RelativePanel>
+        </ScrollViewer>
+        <control:NotificationBar x:Name="notificationBar"></control:NotificationBar>
+        <Button Style="{StaticResource ULoveButton}"  HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Content="退出登录" Command="{Binding LogoutCommand}"></Button>
+        <control:Heart  Show="{Binding ShowHeart,Mode=TwoWay}" ></control:Heart>
+    </Grid>
+   
+</Page>

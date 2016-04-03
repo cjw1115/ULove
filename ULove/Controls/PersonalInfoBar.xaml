@@ -1,0 +1,31 @@
+﻿<UserControl
+    x:Class="ULove.Controls.PersonalInfoBar"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:ULove.Controls"
+    xmlns:converter="using:ULove.Converter"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+    <UserControl.Resources>
+        <converter:GenderConverter x:Key="genderConverter"></converter:GenderConverter>
+    </UserControl.Resources>
+    <Grid x:Name="gridMain">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="2*"/>
+        </Grid.ColumnDefinitions>
+        <Image VerticalAlignment="Center" Margin="12,4,4,4" HorizontalAlignment="Right" Source="{Binding User.ProfileImageUri,Mode=TwoWay}"   Stretch="None"></Image>
+        <Rectangle Grid.Column="1" Width="1" StrokeThickness="0" RadiusY="143" Fill="Gray" RadiusX="28" />
+        <StackPanel Margin="4,4,4,4" Grid.Column="2" VerticalAlignment="Center">
+            <TextBlock  Text="{Binding User.NickName,Mode=TwoWay}"></TextBlock>
+            <TextBlock>
+                        <Run>ID:</Run>
+                        <Run Text="{Binding User.Uid,Mode=TwoWay}"></Run>
+            </TextBlock>
+        </StackPanel>
+        <Image Margin="4,4,4,4" VerticalAlignment="Center" Grid.Column="3" Height="20" Width="20" Stretch="UniformToFill"   Source="{Binding User.Gender,Mode=TwoWay,Converter={StaticResource genderConverter}}"></Image>
+    </Grid>
+</UserControl>

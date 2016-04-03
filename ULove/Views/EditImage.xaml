@@ -1,0 +1,39 @@
+﻿<Page
+    x:Class="ULove.Views.EditImage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:ULove.Views"
+    xmlns:viewModel="using:ULove.ViewModels"
+    xmlns:control="using:ULove.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+    <Page.DataContext>
+        <Binding Path="EditImage" Source="{StaticResource Locator}"></Binding>
+    </Page.DataContext>
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="auto"/>
+
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <control:ULoveImageControl x:Name="uloveImageControl" CurrentImage="{Binding CurrentImage,Mode=TwoWay}"   UloveImages="{Binding ImagesSource,Mode=TwoWay}"></control:ULoveImageControl>
+            </Grid>
+            <CommandBar Grid.Row="1"  ClosedDisplayMode="Compact">
+                <CommandBar.PrimaryCommands>
+                    <AppBarButton Label="设为壁纸" Icon="View" Command="{Binding SetBackgroundCommand}" ></AppBarButton>
+                    <AppBarButton Label="裁剪" Icon="Edit" Command="{Binding ClipCommand}" ></AppBarButton>
+                    <AppBarButton Label="同步" Icon="Save" Command="{Binding SaveToLibCommand}" ></AppBarButton>
+                </CommandBar.PrimaryCommands>
+                <CommandBar.SecondaryCommands >
+                <AppBarButton HorizontalAlignment="Stretch"  Label="Hello world"  ></AppBarButton>
+                
+            </CommandBar.SecondaryCommands>
+            </CommandBar>
+            
+        </Grid>
+        <control:NotificationBar x:Name="notificationBar"></control:NotificationBar>
+    </Grid>
+</Page>
